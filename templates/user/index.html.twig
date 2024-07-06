@@ -12,7 +12,7 @@
             <th>id</th>
             <th>email</th>
             <th>nom</th>
-            <th>prénom</th>
+            <th>Adress de livraison</th>
             <th>role</th>
             <th>action</th>
         </tr>
@@ -20,8 +20,8 @@
             <tr>
                 <th>{{user.id}}</th>
                 <th>{{user.email}}</th>
-                <th>{{user.firstName}}</th>
                 <th>{{user.lastName}}</th>
+                <th>{{user.deliveryAdress}}</th>
                 <td>
                     {% if ('ROLE_ADMIN' in user.roles) %}
                         <span class="text-primary">administrateur</span>
