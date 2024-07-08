@@ -23,10 +23,13 @@ class Product
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?int $price = null;
+    private ?float $price = null;
     
     #[ORM\Column(length: 2)]
     private ?string $size = null;
+
+    #[ORM\Column(length: 2, nullable: true)]
+    private ?string $userSize = null;
 
     /**
      * @var Collection<int, SubCategory>
@@ -43,7 +46,7 @@ class Product
     /**
      * @var Collection<int, AddProductHistory>
      */
-    #[ORM\OneToMany(targetEntity: AddProductHistory::class, mappedBy: 'product')]
+    #[ORM\OneToMany(targetEntity: AddProductHistory::class, mappedBy: 'product', cascade: ['remove'])]
     private Collection $addProductHistories;
 
     public function __construct()
@@ -81,12 +84,12 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 
@@ -101,6 +104,18 @@ class Product
     public function setSize(?string $size): static
     {
         $this->size = $size;
+
+        return $this;
+    }
+
+    public function getUserSize(): ?string
+    {
+        return $this->userSize;
+    }
+
+    public function setUserSize(?string $userSize): self
+    {
+        $this->userSize = $userSize;
 
         return $this;
     }

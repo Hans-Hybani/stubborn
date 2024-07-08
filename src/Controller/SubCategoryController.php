@@ -19,6 +19,7 @@ class SubCategoryController extends AbstractController
     {
         return $this->render('sub_category/index.html.twig', [
             'sub_categories' => $subCategoryRepository->findAll(),
+            'page_title' => 'Sub Category',
         ]);
     }
 
@@ -39,6 +40,7 @@ class SubCategoryController extends AbstractController
         return $this->render('sub_category/new.html.twig', [
             'sub_category' => $subCategory,
             'form' => $form,
+            'page_title' => 'Sub Category',
         ]);
     }
 
@@ -47,6 +49,7 @@ class SubCategoryController extends AbstractController
     {
         return $this->render('sub_category/show.html.twig', [
             'sub_category' => $subCategory,
+            'page_title' => 'Sub Category',
         ]);
     }
 
@@ -65,6 +68,7 @@ class SubCategoryController extends AbstractController
         return $this->render('sub_category/edit.html.twig', [
             'sub_category' => $subCategory,
             'form' => $form,
+            'page_title' => 'Sub Category',
         ]);
     }
 

@@ -19,7 +19,8 @@ class CategoryController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
         return $this->render('category/index.html.twig', [
-            'categories'=>$categories
+            'categories'=>$categories,
+            'page_title' => 'Categories',
         ]);
     }
 
@@ -39,7 +40,10 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('app_category');
         }
 
-        return $this->render('category/new.html.twig', ['form' =>$form->createView()]);
+        return $this->render('category/new.html.twig', [
+            'form' =>$form->createView(),
+            'page_title' => 'Categories',
+        ]);
 
     }
 
@@ -57,7 +61,10 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('app_category');
         }
 
-        return $this->render('category/update.html.twig', ['form' =>$form->createView()]);
+        return $this->render('category/update.html.twig', [
+            'form' =>$form->createView(),
+            'page_title' => 'Categories',
+        ]);
     }
 
     #[Route('/admin/category/{id}/delete', name: 'app_category_delete')]
