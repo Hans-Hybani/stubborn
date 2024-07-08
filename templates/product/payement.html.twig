@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Faire un paiement{% endblock %}
+
+{% block body %}
+    <h1>Faire un paiement</h1>
+
+    {% if app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ app.flashes('error')|first }}
+        </div>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_row(form.amount) }}
+    <button type="submit" class="btn btn-primary">Payer</button>
+    {{ form_end(form) }}
+{% endblock %}

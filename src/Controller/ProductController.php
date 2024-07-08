@@ -8,6 +8,7 @@ use App\Form\AddProductHistoryType;
 use App\Form\ProductType;
 use App\Form\ProductUpdateType;
 use App\Repository\AddProductHistoryRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +27,16 @@ class ProductController extends AbstractController
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
             'page_title' => 'Product',
+        ]);
+    }
+
+    #[Route('/boutique', name: 'app_boutique', methods:['GET'])]
+    public function boutique(ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
+    {
+        return $this->render('product/boutique.html.twig', [
+            'products'=>$productRepository->findBy([],['id'=>"DESC"]),
+            'categories'=>$categoryRepository->findAll(),
+            'page_title' => 'Boutique'
         ]);
     }
 
@@ -182,6 +193,17 @@ class ProductController extends AbstractController
         return $this->render('product/addedStockHistoryShow.html.twig',[
             "productsAdded"=>$productAddedHistory,
             'page_title' => 'Historique de stock/Produit',
+        ]);
+    }
+
+    #[Route('/highlighted', name: 'app_product_highlighted', methods: ['GET'])]
+    public function highlightedProducts(ProductRepository $productRepository): Response
+    {
+        $highlightedProducts = $productRepository->findBy(['highlighted' => true]);
+
+        return $this->render('home/index.html.twig', [
+            'highlightedProducts' => $highlightedProducts,
+            'page_title' => 'Highlighted Products',
         ]);
     }
 }

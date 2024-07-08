@@ -18,7 +18,6 @@ class ProductUpdateType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description')
             ->add('price')
             ->add('size', ChoiceType::class, [
                 'choices' => [
@@ -47,12 +46,7 @@ class ProductUpdateType extends AbstractType
                     ])
                 ]
             ])
-            // ->add('stock')
-            ->add('subCategories', EntityType::class, [
-                'class' => SubCategory::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
+            ->add('stock')
         ;
     }
 

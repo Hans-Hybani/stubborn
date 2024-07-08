@@ -5,45 +5,47 @@
 {% block body %}
 <div class="container">
     <h1>Cart</h1>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Nom du produit</th>
-                <th>Prix</th>
-                <th>Quantité</th>
-                <th>Prix Total</th>
-                <th>Taille</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in items %}
-                <tr>
-                    <td><img src="{{ asset('uploads/images/'~item.product.image)}}" class="card-img-top" alt="..."></td>
-                    <td>{{ item.product.name }}</td>
-                    <td>{{ item.product.price }} EUR</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.product.price * item.quantity }} EUR</td>
-                    <td>{{ item.size }}</td>
-                    <td>
-                        <a href="{{ path('app_cart_product_remove', {'id': item.product.id, 'size': item.size}) }}" class="text-danger text-decoration-none">Supprimer</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">Votre panier est vide</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% for item in items %}
+        <div class="product-table-wrapper">
+            <table class="table product-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Taille</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2"><img src="{{ asset('uploads/images/'~item.product.image)}}" class="cart-image" alt="..."></td>
+                        <td rowspan="2">{{ item.product.name }}</td>
+                        <td rowspan="2">{{ item.product.price }}  €</td>
+                        <td>{{ item.size }}</td>
+                        <td rowspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <a href="{{ path('app_cart_product_remove', {'id': item.product.id, 'size': item.size}) }}" class="btn btn-danger btn-sm">Retirer du panier</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>Votre panier est vide</p>
+    {% endfor %}
     {% if total > 0 %}
     <br><br>
-    <h2>Total : {{ total }} Euros</h2>
-    <div class="row">
-        <a href="#" class="btn btn-primary col-2 m-lg-1">Valider la commande</a>
-        <a href="{{ path('app_cart_remove') }}" class="btn btn-outline-danger col-2 m-lg-1">Supprimer le panier</a>
+    <div class="total">
+        <h2>Total : {{ total }}  €</h2>
+        <div class="row">
+            <a href="{{ path('app_cart_remove') }}" class="btn btn-outline-danger">FINALISER LA COMMANDE</a>
+            <a href="#" class="btn btn-primary ">CONTINUER MES ACHATS</a>
+        </div>
     </div>
     {% endif %}
 </div>
 {% endblock %}
+

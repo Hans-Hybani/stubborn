@@ -26,12 +26,9 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            // ->add(child: 'firstName')
             ->add(child: 'deliveryAdress')
             ->add(child: 'lastName')
             ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

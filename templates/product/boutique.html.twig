@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+<div class="container-back">
+
+        {% if products is defined %}
+        <ul>
+                <li class="liste">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Fourchette de prix
+                        </a>
+                        <ul class="dropdown-menu liste">
+                                <li><a class="dropdown-item " style="font-weight: bolder" href="{{ path('app_home_product_filter', {'min_price': null, 'max_price': null}) }}">Fourchette de prix</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item " style="font-weight: bolder" href="{{ path('app_home_product_filter', {'min_price': 10, 'max_price': 29}) }}">10 - 29</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item " style="font-weight: bolder" href="{{ path('app_home_product_filter', {'min_price': 30, 'max_price': 35}) }}">30 - 35</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item " style="font-weight: bolder" href="{{ path('app_home_product_filter', {'min_price': 35, 'max_price': 50}) }}">35 - 50</a></li>
+                        </ul>
+                </li>
+        </ul>
+
+        {% for product in products %}
+                <div class="card__t-shirt">
+                        <div class="card__t-shirt__img">
+                                <img src="{{ asset('uploads/images/'~product.image)}}" alt="" class="image">  
+                        </div>
+                        <div class="card__t-shirt__info">
+                                <p class="name">Nom : {{ product.name }}</p>
+                                <p class="price">Prix : {{ product.price }} €</p>
+                        </div>
+                        {% if app.user == true %}
+                                <a href="{{path('app_home_product_show',{'id':product.id})}}" class="btn btn-outline-primary button">Voir</a>
+                        {% endif %}
+                        </div>
+                {% endfor %} 
+        </div>
+        {% endif %}
+</div>
+{% endblock %}
+
