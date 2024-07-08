@@ -1,41 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Votre Panier{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Cart</h1>
-        <table class="table table-bordered">
+<div class="container">
+    <h1>Cart</h1>
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Totale Price</th>
+                <th>Image</th>
+                <th>Nom du produit</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Prix Total</th>
+                <th>Taille</th>
                 <th>Action</th>
             </tr>
+        </thead>
+        <tbody>
             {% for item in items %}
                 <tr>
-                    <th>{{ item.product.name }}</th>
-                    <th>{{ item.product.price }}</th>
-                    <th>{{ item.quantity}}</th>
-                    <th>{{ item.product.price * item.quantity}}</th>
+                    <td><img src="{{ asset('uploads/images/'~item.product.image)}}" class="card-img-top" alt="..."></td>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.price }} EUR</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.product.price * item.quantity }} EUR</td>
+                    <td>{{ item.size }}</td>
                     <td>
-                        <a href="{{path('app_cart_product_remove',{'id':item.product.id})}}" class="text-danger text-decpration-none">Delete to card</a>
+                        <a href="{{ path('app_cart_product_remove', {'id': item.product.id, 'size': item.size}) }}" class="text-danger text-decoration-none">Supprimer</a>
                     </td>
                 </tr>
-
-                {% else %}
-                    <p>Votre panier est vide</p>
+            {% else %}
+                <tr>
+                    <td colspan="6">Votre panier est vide</td>
+                </tr>
             {% endfor %}
-        </table>
-        {% if total > 0 %}
-        <br><br>
-        <h2>Total : {{ total }} Euros</h2>
-        <div class="row">
-            <a href="" class="btn btn-primary col-2 m-lg-1">Valider la commande</a>
-            <a href="{{path('app_cart_remove')}}" class="btn btn-outline-danger col-2 m-lg-1">Supprimer le panier</a>
-        </div>
-        {% endif %}
-        
+        </tbody>
+    </table>
+    {% if total > 0 %}
+    <br><br>
+    <h2>Total : {{ total }} Euros</h2>
+    <div class="row">
+        <a href="#" class="btn btn-primary col-2 m-lg-1">Valider la commande</a>
+        <a href="{{ path('app_cart_remove') }}" class="btn btn-outline-danger col-2 m-lg-1">Supprimer le panier</a>
     </div>
+    {% endif %}
+</div>
 {% endblock %}

@@ -25,6 +25,7 @@ class ProductController extends AbstractController
     {
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findAll(),
+            'page_title' => 'Product',
         ]);
     }
 
@@ -68,6 +69,7 @@ class ProductController extends AbstractController
         return $this->render('product/new.html.twig', [
             'product' => $product,
             'form' => $form,
+            'page_title' => 'Product',
         ]);
     }
 
@@ -76,6 +78,7 @@ class ProductController extends AbstractController
     {
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'page_title' => 'Product',
         ]);
     }
 
@@ -110,20 +113,29 @@ class ProductController extends AbstractController
         return $this->render('product/edit.html.twig', [
             'product' => $product,
             'form' => $form,
+            'page_title' => 'Product',
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
-    public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
+    private $entityManager;
+    private $productRepository;
+
+    public function __construct(EntityManagerInterface $entityManager, ProductRepository $productRepository)
     {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($product);
+        $this->entityManager = $entityManager;
+        $this->productRepository = $productRepository;
+    }
 
-            $this->addFlash('danger','votre produit a été supprimé');
-            $entityManager->flush();
+    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
+    public function delete($id): Response
+    {
+        $product = $this->productRepository->find($id);
+
+        if ($product) {
+            $this->entityManager->remove($product);
+            $this->entityManager->flush();
         }
-
-        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_product_index');
     }
 
     #[Route('/add/product/{id}/stock', name: 'app_product_stock_add', methods: ['POST','GET'])]
@@ -156,7 +168,8 @@ class ProductController extends AbstractController
 
         return $this->render('product/addStock.html.twig',
             ['form' => $form->createView(),
-            'product'=>$product
+            'product'=>$product,
+            'page_title' => 'Product',
             ]
         );
     }
@@ -167,7 +180,8 @@ class ProductController extends AbstractController
         $productAddedHistory = $addProductHistoryRepository->findBy(['product'=>$product],['id'=>'DESC']);
         
         return $this->render('product/addedStockHistoryShow.html.twig',[
-            "productsAdded"=>$productAddedHistory
+            "productsAdded"=>$productAddedHistory,
+            'page_title' => 'Historique de stock/Produit',
         ]);
     }
 }

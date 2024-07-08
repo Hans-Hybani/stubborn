@@ -15,17 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods:['GET'])]
-    public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository, Request $request, PaginatorInterface $paginator): Response
+    public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
     {
-        $data = $productRepository->findBy([],['id'=>"DESC"]);
-        $products = $paginator->paginate(
-            $data,
-            $request->query->getInt('page', 1),
-            5
-        );
         return $this->render('home/index.html.twig', [
-            'products'=>$products,
-            'categories'=>$categoryRepository->findAll()
+            'products'=>$productRepository->findBy([],['id'=>"DESC"]),
+            'categories'=>$categoryRepository->findAll(),
+            'page_title' => 'Accueil'
         ]);
     }
 
@@ -36,7 +31,8 @@ class HomeController extends AbstractController
         return $this->render('home/show.html.twig', [
             'product'=>$product,
             'products'=>$lastProducts,
-            'categories'=>$categoryRepository->findAll()
+            'categories'=>$categoryRepository->findAll(),
+            'page_title' => 'Panier',
         ]);
     }
 
