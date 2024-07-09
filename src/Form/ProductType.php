@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Entity\SubCategory;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +19,6 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description')
             ->add('price')
             ->add('size', ChoiceType::class, [
                 'choices' => [
@@ -29,6 +29,10 @@ class ProductType extends AbstractType
                     'XL' => 'XL',
                 ],
                 'label' => 'Taille',
+            ])
+            ->add('highlighted', CheckboxType::class, [
+                'label' => 'Mettre en avant',
+                'required' => false,
             ])
             ->add("stock")
             ->add("image", FileType::class,[
@@ -47,11 +51,6 @@ class ProductType extends AbstractType
                         'mimeTypesMessage'=>"votre image de couverture doit etre au format valide(png, jpg, jpeg)"
                     ])
                 ]
-            ])
-            ->add('subCategories', EntityType::class, [
-                'class' => SubCategory::class,
-                'choice_label' => 'name',
-                'multiple' => true,
             ])
         ;
     }

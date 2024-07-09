@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -22,7 +23,7 @@ class Product
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     private ?float $price = null;
     
     #[ORM\Column(length: 2)]
@@ -30,6 +31,11 @@ class Product
 
     #[ORM\Column(length: 2, nullable: true)]
     private ?string $userSize = null;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $highlighted = false;
 
     /**
      * @var Collection<int, SubCategory>
@@ -53,6 +59,18 @@ class Product
     {
         $this->subCategories = new ArrayCollection();
         $this->addProductHistories = new ArrayCollection();
+    }
+
+    public function getHighlighted(): bool
+    {
+        return $this->highlighted;
+    }
+
+    public function setHighlighted(bool $highlighted): self
+    {
+        $this->highlighted = $highlighted;
+
+        return $this;
     }
 
     public function getId(): ?int

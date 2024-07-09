@@ -1,7 +1,6 @@
 {{ form_start(form) }}
-    {{ form_row(form.name,{'attr':{'class': 'form form-control'}}) }}<br>
+
     {{ form_row(form.size, {'attr':{'class':'form form-control'}}) }}<br>
-    {{ form_row(form.price, {'attr':{'class':'form form-control'}}) }}<br>
     
     {% if button_label != "Update" %}
         {{ form_row(form.stock, {'attr':{'class':'form form-control'}}) }}<br>

@@ -15,10 +15,16 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home', methods:['GET'])]
-    public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
+    public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $data = $productRepository->findBy([],['id'=>"DESC"]);
+        $products = $paginator->paginate(
+            $data,
+            $request->query->getInt('page',1),
+            3
+        );
         return $this->render('home/index.html.twig', [
-            'products'=>$productRepository->findBy([],['id'=>"DESC"]),
+            'products'=>$products,
             'categories'=>$categoryRepository->findAll(),
             'page_title' => 'Accueil'
         ]);
@@ -36,16 +42,27 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/home/product/subcategory/{id}/filter', name: 'app_home_product_filter', methods:['GET'])]
-    public function filter($id, SubCategoryRepository $subCategoryRepository, CategoryRepository $categoryRepository): Response
+
+    #[Route('/home/product/filter', name: 'app_home_product_filter', methods: ['GET'])]
+    public function filter(Request $request, ProductRepository $productRepository): Response
     {
-        $products = $subCategoryRepository->find($id)->getProducts();
-        $subCategory = $subCategoryRepository->find($id);
-        
-        return $this->render('home/filter.html.twig', [
-            'products'=>$products,
-            'subCategory'=>$subCategory,
-            'categories'=>$categoryRepository->findAll()
+        $products = $productRepository->findAll();
+
+        $minPrice = $request->query->get('min_price');
+        $maxPrice = $request->query->get('max_price');
+
+        if ($minPrice !== null && $maxPrice !== null) {
+            $filteredProducts = array_filter($products, function ($product) use ($minPrice, $maxPrice) {
+                return $product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice;
+            });
+        } else {
+            $filteredProducts = $products;
+        }
+
+        return $this->render('product/boutique.html.twig', [
+            'products' => $filteredProducts,
+            'page_title' => 'Filtrage par Prix',
         ]);
     }
+
 }

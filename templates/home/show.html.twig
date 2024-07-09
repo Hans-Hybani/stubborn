@@ -3,25 +3,6 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-{# <div class="container">
-        <div class="card mb-12" style="margin-top: 70px">
-                <div class="row g-0">
-                        <div class="col-md-4">
-                                <img src="{{ asset('uploads/images/'~product.image)}}" class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                                <div class="card-body">
-                                        <h5 class="card-title text-success">{{ product.name }}</h5>
-                                        <p class="card-text">{{ product.description }}</p>
-                                        <h2>{{ product.price }} EUR</h2>
-                                        <a href="{{path('app_cart_new',{'id':product.id})}}" class="text-success text-decoration-none">add to card</a>
-
-                                </div>
-                        </div>
-                </div>
-        </div>
-    </div>
-</div> #}
 <div class="container">
     <div class="card mb-12" style="margin-top: 70px">
         <div class="row g-0">
@@ -31,7 +12,6 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title text-success">{{ product.name }}</h5>
-                    <p class="card-text">{{ product.description }}</p>
                     <h2>{{ product.price }} EUR</h2>
                     
                     <form action="{{ path('app_cart_new', {'id': product.id}) }}" method="POST">
@@ -47,7 +27,6 @@
                         </div>
                         <button type="submit" class="btn btn-success">Ajouter au panier</button>
                     </form>
-                    
                 </div>
             </div>
         </div>

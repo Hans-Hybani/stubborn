@@ -202,3 +202,72 @@ hr{
 .livraison{
     margin-bottom: 50px;
 }
+
+
+/* tableau style */
+.product-table-wrapper {
+    margin-bottom: 20px;
+}
+
+.product-table {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.product-table thead {
+    background-color: #f8f9fa;
+}
+
+.product-table th, .product-table td {
+    border: none;
+    padding: 10px;
+    text-align: left;
+}
+
+.product-table th {
+    font-weight: bold;
+}
+
+.product-table td img.cart-image {
+    max-width: 100px;
+    height: auto;
+}
+
+.product-table td .btn {
+    display: block;
+    margin-top: 10px;
+}
+
+.row {
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.row .btn {
+    margin-right: 10px;
+}
+
+.total{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 50px;
+}
+.total h2{
+    padding: 10px;
+    border: solid 1px black;
+}
+
+.liste{
+    list-style: none;
+    border: solid 1px black;
+    padding: 10px;
+}
+.liste-nav{
+    list-style: none;
+    border: solid 1px black;
+    padding: 10px;
+}
