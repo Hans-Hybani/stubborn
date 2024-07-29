@@ -18,10 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-#[Route('/editor/product')]
 class ProductController extends AbstractController
 {
-    #[Route('/', name: 'app_product_index', methods: ['GET'])]
+    #[Route('/editor/product', name: 'app_product_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
         return $this->render('product/index.html.twig', [
@@ -40,7 +39,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+    #[Route('/editor/product/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $product = new Product();
@@ -84,7 +83,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
+    #[Route('/editor/product/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product): Response
     {
         return $this->render('product/show.html.twig', [
@@ -93,7 +92,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
+    #[Route('/editor/product/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ProductUpdateType::class, $product);
@@ -137,7 +136,7 @@ class ProductController extends AbstractController
         $this->productRepository = $productRepository;
     }
 
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
+    #[Route('/editor/product/{id}', name: 'app_product_delete', methods: ['POST'])]
     public function delete($id): Response
     {
         $product = $this->productRepository->find($id);
@@ -149,7 +148,7 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('app_product_index');
     }
 
-    #[Route('/add/product/{id}/stock', name: 'app_product_stock_add', methods: ['POST','GET'])]
+    #[Route('/editor/product/add/product/{id}/stock', name: 'app_product_stock_add', methods: ['POST','GET'])]
     public function addStock($id, EntityManagerInterface $entityManager, Request $request, ProductRepository $productRepository):Response{
         $addStock = new AddProductHistory();
         $form = $this->createForm(AddProductHistoryType::class,$addStock);
@@ -185,7 +184,7 @@ class ProductController extends AbstractController
         );
     }
 
-    #[Route('/add/product/{id}/stock/history', name: 'app_product_stock_add_history', methods: ['GET'])]
+    #[Route('/editor/product/add/product/{id}/stock/history', name: 'app_product_stock_add_history', methods: ['GET'])]
     public function productAddHistory($id, ProductRepository $productRepository, AddProductHistoryRepository $addProductHistoryRepository):Response{
         $product = $productRepository->find($id);
         $productAddedHistory = $addProductHistoryRepository->findBy(['product'=>$product],['id'=>'DESC']);
@@ -196,7 +195,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/highlighted', name: 'app_product_highlighted', methods: ['GET'])]
+    #[Route('/editor/product/highlighted', name: 'app_product_highlighted', methods: ['GET'])]
     public function highlightedProducts(ProductRepository $productRepository): Response
     {
         $highlightedProducts = $productRepository->findBy(['highlighted' => true]);

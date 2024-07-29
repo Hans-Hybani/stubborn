@@ -13,6 +13,7 @@
                                           <a href="{{path('app_boutique')}}"><li>Boutique</li></a>
                                           <li><a href="{{ path('app_cart')}}">Panier</a></li>
                                         {% endif %}
+
                                         {% if app.user == false %}
                                           <li class="nav-item">
                                             <a href="{{ path('app_register')}}" class="nav-link">S'inscrire</a>
