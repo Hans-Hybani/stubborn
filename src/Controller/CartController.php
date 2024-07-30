@@ -21,6 +21,7 @@ class CartController extends AbstractController
         $cart = $session->get('cart', []);
         $cartWithData = [];
 
+
         foreach ($cart as $item) {
             if (isset($item['id'], $item['size'], $item['quantity'])) {
                 $product = $this->productRepository->find($item['id']);

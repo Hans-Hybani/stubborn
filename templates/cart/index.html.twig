@@ -39,10 +39,10 @@
     {% if total > 0 %}
     <br><br>
     <div class="total">
-        <h2>Total : {{ total }}  €</h2>
+        <h2>Total : {{ total }} Eur</h2>
         <div class="row">
             <a href="{{ path('app_cart_remove') }}" class="btn btn-outline-danger">FINALISER LA COMMANDE</a>
-            <a href="#" class="btn btn-primary ">CONTINUER MES ACHATS</a>
+            <a href="{{ path('app_order')}}" class="btn btn-primary ">CONTINUER MES ACHATS</a>
         </div>
     </div>
     {% endif %}
