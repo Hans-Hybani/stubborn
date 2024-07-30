@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+        <h1>Order</h1>
+        {% for order in orders %}
+                <h2>Commande n:{{order.id}}</h2>
+                <p>Information du client</p>
+                <table class="table table-bordered">
+                        <tr>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Telephone</th>
+                                <th>Adresse</th>
+                        </tr>
+                        <tr>
+                                <th>{{order.firstName}}</th>
+                                <th>{{order.lasstName}}</th>
+                                <th>{{order.phone}}</th>
+                                <th>{{order.adresse}}</th>
+                        </tr>
+                </table>
+                <h5>Corps de la commande</h5>
+                <table class="table table-bordered">
+                        <tr>
+                                <th>Nom du produit</th>
+                                <th>Prix unitaire</th>
+                                <th>Quantité</th>
+                                <th>Prix total</th>
+                        </tr>
+                        {% for product in order.orderProducts %}
+                                <tr>
+                                        <td>{{ product.product.name }}</td>
+                                        <td>{{ product.product.price }}</td>
+                                        <td>{{ product.qte }}</td>
+                                        <td>{{ product.product.price * product.qte }}</td>
+                                </tr>
+                        {% endfor %}
+                        <tr>
+                                <th>{{order.firstName}}</th>
+                                <th>{{order.lasstName}}</th>
+                                <th>{{order.phone}}</th>
+                                <th>{{order.adresse}}</th>
+                        </tr>
+                </table>
+                <h5>Total à payer : {{ order.totalPrice }} Eur</h5>
+                <br><br>
+        {% endfor %}
+
+</div>
+{% endblock %}

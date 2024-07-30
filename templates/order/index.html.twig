@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello OrderController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h1>Chechout</h1>
+            {{ form_start(form, {"attr":{'data-turbo':'false'}}) }}
+                {{ form_widget(form)}}
+                <input type="submit" value="continuer" class="btn btn-outline-primary">
+
+            {{ form_end(form)}}
+
+        </div>
+        <div class="col-4">
+            <h4>Montant à payer : {{ total }} Eur</h4>
+        </div>
+    </div>
+</div>
+{% endblock %}
