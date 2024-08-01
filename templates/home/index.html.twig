@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
 {% block title %}Hello HomeController!{% endblock %}
 
@@ -22,4 +22,31 @@
 </div> 
 <br>
 
+{% endblock %} #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Highlighted Products{% endblock %}
+
+{% block body %}
+<div class="container-back">
+    {% if highlightedProducts is not empty %}
+        {% for product in highlightedProducts %}
+            <div class="card__t-shirt">
+                <div class="card__t-shirt__img">
+                    <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" class="image">
+                </div>
+                <div class="card__t-shirt__info">
+                    <p class="name">Nom : {{ product.name }}</p>
+                    <p class="price">Prix : {{ product.price }} €</p>
+                </div>
+                {% if app.user %}
+                    <a href="{{ path('app_home_product_show', { 'id': product.id }) }}" class="btn btn-outline-primary button">Voir</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Aucun produit mis en avant pour le moment.</p>
+    {% endif %}
+</div>
+<br>
 {% endblock %}

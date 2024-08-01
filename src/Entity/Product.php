@@ -17,7 +17,7 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25, unique:true)]
+    #[ORM\Column(length: 25)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -31,11 +31,6 @@ class Product
 
     #[ORM\Column(length: 2, nullable: true)]
     private ?string $userSize = null;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $highlighted = false;
 
     /**
      * @var Collection<int, SubCategory>
@@ -61,23 +56,14 @@ class Product
     #[ORM\OneToMany(targetEntity: OrderProducts::class, mappedBy: 'product')]
     private Collection $orderProducts;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $highlighted = null;
+
     public function __construct()
     {
         $this->subCategories = new ArrayCollection();
         $this->addProductHistories = new ArrayCollection();
         $this->orderProducts = new ArrayCollection();
-    }
-
-    public function getHighlighted(): bool
-    {
-        return $this->highlighted;
-    }
-
-    public function setHighlighted(bool $highlighted): self
-    {
-        $this->highlighted = $highlighted;
-
-        return $this;
     }
 
     public function getId(): ?int
@@ -249,6 +235,18 @@ class Product
                 $orderProduct->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isHighlighted(): ?bool
+    {
+        return $this->highlighted;
+    }
+
+    public function setHighlighted(?bool $highlighted): static
+    {
+        $this->highlighted = $highlighted;
 
         return $this;
     }

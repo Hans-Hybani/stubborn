@@ -17,15 +17,20 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home', methods:['GET'])]
     public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $data = $productRepository->findBy([],['id'=>"DESC"]);
+        $data = $productRepository->findBy([], ['id' => 'DESC']);
         $products = $paginator->paginate(
             $data,
-            $request->query->getInt('page',1),
+            $request->query->getInt('page', 1),
             3
         );
+
+        // Fetch highlighted products
+        $highlightedProducts = $productRepository->findHighlighted();
+
         return $this->render('home/index.html.twig', [
-            'products'=>$products,
-            'categories'=>$categoryRepository->findAll(),
+            'products' => $products,
+            'categories' => $categoryRepository->findAll(),
+            'highlightedProducts' => $highlightedProducts,
             'page_title' => 'Accueil'
         ]);
     }

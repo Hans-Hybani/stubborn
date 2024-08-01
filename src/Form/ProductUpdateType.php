@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Entity\SubCategory;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,6 +29,10 @@ class ProductUpdateType extends AbstractType
                     'XL' => 'XL',
                 ],
                 'label' => 'Taille',
+            ])
+            ->add('highlighted', CheckboxType::class, [
+                'label' => 'Mettre en avant',
+                'required' => false,
             ])
             ->add("image", FileType::class,[
                 'label' => 'image de produit',

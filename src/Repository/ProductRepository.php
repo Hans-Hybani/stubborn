@@ -40,4 +40,13 @@ class ProductRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findHighlighted()
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.highlighted = :highlighted')
+            ->setParameter('highlighted', true)
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -198,9 +198,9 @@ class ProductController extends AbstractController
     #[Route('/editor/product/highlighted', name: 'app_product_highlighted', methods: ['GET'])]
     public function highlightedProducts(ProductRepository $productRepository): Response
     {
-        $highlightedProducts = $productRepository->findBy(['highlighted' => true]);
+        $highlightedProducts = $productRepository->findHighlighted();
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('product/highlighted.html.twig', [
             'highlightedProducts' => $highlightedProducts,
             'page_title' => 'Highlighted Products',
         ]);
