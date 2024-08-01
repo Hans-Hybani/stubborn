@@ -26,10 +26,10 @@ class Product
     #[ORM\Column(length: 255)]
     private ?float $price = null;
     
-    #[ORM\Column(length: 2)]
+    #[ORM\Column(length: 3)]
     private ?string $size = null;
 
-    #[ORM\Column(length: 2, nullable: true)]
+    #[ORM\Column(length: 3, nullable: true)]
     private ?string $userSize = null;
 
     /**

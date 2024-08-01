@@ -33,7 +33,7 @@
         {% for product in highlightedProducts %}
             <div class="card__t-shirt">
                 <div class="card__t-shirt__img">
-                    <img src="{{ asset('uploads/images/' ~ product.image) }}" alt="{{ product.name }}" class="image">
+                    <img src="{{ asset('assets/images/' ~ product.image) }}" alt="{{ product.name }}" class="image">
                 </div>
                 <div class="card__t-shirt__info">
                     <p class="name">Nom : {{ product.name }}</p>

@@ -21,9 +21,9 @@ class HomeController extends AbstractController
         $products = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
-            3
+            2
         );
-
+        
         // Fetch highlighted products
         $highlightedProducts = $productRepository->findHighlighted();
 
